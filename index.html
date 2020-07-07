@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<title>Memoji</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<!-- Заголовок -->
+	<header class="header">Memoji</header>
+
+	<!-- Секция с игровым полем (поле карточек) -->
+	<section class="field" id="id_field">
+		<!-- ЗДЕСЬ БУДУТ РАЗМЕЩАТЬСЯ КАРТОЧКИ -->
+	</section>
+	<div class="cssTimer" id="id_timer"></div> <!-- Элемент Таймер -->
+
+	<div class="modal" id="id_modal">
+		<div class="modal__wide"></div>
+		<div class="modal__message">
+			<div class="modal__result_msg" id="modal__win">
+				<span>W</span>
+				<span>i</span>
+				<span>n</span>
+			</div>
+			<div class="modal__result_msg" id="modal__lose">
+				<span>L</span>
+				<span>o</span>
+				<span>s</span>
+				<span>e</span>
+			</div>
+			<button class="modal__btn" id="modal__btn">Play again</button>
+			<button class="modal__btn" id="modal__btn_try">Try again</button>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="./script.js"></script>
+	<script>
+		mainScript(
+			{
+				countRow: 3, 
+				countCol: 4,
+				idSection: "id_field",
+				cardObj: {
+					cssWrapper: "field__wrapper",
+					cssWrapperTurnOpen: "field__wrapper_turn",
+					cssCard: "field__card",                        // общий класс
+					cssCloseCard: "field__card_close",
+					cssOpenCard: "class_card_open",
+					cssCardMatched: "field__card_matched",
+					cssCardMissed: "field__card_missed"
+				},
+				idTimer: "id_timer",
+				htmlModalObj: {
+					idModal: "id_modal",               // ID родительского модального окна
+					idWin: "modal__win",               // ID сообщения WIN
+					idLose: "modal__lose",             // ID сообщения Lose
+					cssVisibleClass: "modal__visible", // класс CSS делает видимым элементы модального окна
+					idBtnPlayAgain: "modal__btn",
+					idBtnTryAgain: "modal__btn_try"
+				}
+			});
+	</script>
+</body>
+</html>

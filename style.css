@@ -1,0 +1,223 @@
+:root
+{
+	--width-card: 130px; /* Ширина карточки */
+	--height-card: 130px; /* Высота карточки */
+	--count-row: 3; /* Кол-во строк карточек */
+	--count-col: 4; /* Кол-во столбцов карточек */
+}
+*
+{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+html
+{
+	background-color: #000;
+	width: 100%;
+	height: 100%;
+	position: relative;
+	color: #434344;
+}
+body
+{
+	position: absolute;
+	width: 80%;
+	height: 100%;
+	background-color: #CFD0CF;
+	left: 50%;
+	transform: translateX(-50%);
+}
+.header
+{
+	position: relative;
+	text-align: center;
+	font: 42px/47px Arial, sans-serif;
+	/*color: #434344;*/ /* Цвет задается через html */
+	margin: 40px auto 40px;
+}
+/* -------------------------------------------------------------------------------------------------------------------- */
+/* игровое поле section с карточками */
+.field
+{
+	position: relative;
+	width: 620px; /* Если браузер не поддерживает var и calc */
+	width: calc(var(--width-card) * var(--count-col) + 25px * var(--count-col));
+	left: 13px; /* компенсируем правый margin 25px/2 */
+	margin: 0 auto;
+}
+
+/* обертка для карточки */
+.field__wrapper
+{
+	perspective: 600px;
+	transform-style: preserve-3d;
+
+	transition: transform 0.5s;
+	
+	position: relative;
+	width: 130px; /* Если браузер не поддерживает использование переменных через var */
+	height: 130px; /* Если браузер не поддерживает использование переменных через var */
+	width: var(--width-card);
+	height: var(--height-card);
+	
+	border-radius: 9px;
+	
+	margin: 0 25px 25px 0;
+	display: inline-block;
+	cursor: pointer;
+}
+.field__wrapper_turn
+{
+	transform: rotate3d(0, 1, 0, 180deg);
+}
+
+   /* Общие свойства для открытой и закрытой карточки */
+.field__card
+{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	border-radius: 9px;
+	box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+	
+	cursor: pointer;
+	border: 5px solid #FFF;
+}
+         /* закрытая карточка (рубашкой вверх) */
+.field__card_close
+{
+	background: linear-gradient(45deg, #22AB93, #19668D);
+	backface-visibility: hidden;
+	z-index: 2;
+}
+        /* открытая карточка (рубашкой вниз) */
+.class_card_open
+{
+	background: #fff;
+	font-size: 75px;
+	backface-visibility: hidden;
+	transform: rotateY(180deg);
+	text-align: center;
+	vertical-align: middle;
+
+	z-index: 1;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+/* -------------------------------------------------------------------------------------------------------------------- */
+
+          /* цвет фона для совпадающих карточек */
+.field__card_matched
+{
+	background: #5AD66F;
+}
+
+         /* цвет фона, если карточки НЕ совпали */
+.field__card_missed
+{
+	background: #F44336;	
+}
+/* -------------------------------------------------------------------------------------------------------------------- */
+		/* Таймер */
+.cssTimer
+{
+	position: relative;
+	margin-top: 5px; /* делаем отступ таймера 30px, поскольку display: inline-block; margin не схлопнется добавляем 5px + 25px = 30px */
+	font: 32px/36px Arial, sans-serif;
+	/*color: #434344;*/ /* Цвет задается через html */
+	display: inline-block;
+	left: 50%;
+	transform: translateX(-50%);
+}
+/* -------------------------------------------------------------------------------------------------------------------- */
+		/* Модальное окно */
+.modal /* родительский элемент модального окна */
+{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	display: none;
+}
+.modal__wide /* затеняющее окно */
+{
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+	opacity: .5;
+}
+.modal__message
+{
+	position: fixed;
+	min-width: 350px;  /* минимальная ширина 350px, height - нет, значит высота блока зависит от содержимого */
+	padding: 0 60px;   /* зависит от контента */
+	box-sizing: content-box;
+	background-color: #fff;
+
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+.modal__result_msg /* Выводит окно с сообщением-результатом WIN-LOSE*/
+{
+	text-align: center;
+	font: 700 48px/47px Arial, sans-serif;
+	margin-top: 30px;
+
+	height: 48px;
+	display: none;
+}
+.modal__result_msg :nth-child(1)
+{
+	animation: resize-txt 0.5s ease-in-out infinite alternate forwards;
+}
+.modal__result_msg :nth-child(2)
+{
+	animation: resize-txt 0.5s ease-in-out infinite alternate 0.3s forwards;
+}
+.modal__result_msg :nth-child(3)
+{
+	animation: resize-txt 0.5s ease-in-out infinite alternate 0.6s forwards;
+}
+.modal__result_msg :nth-child(4)
+{
+	animation: resize-txt 0.5s ease-in-out infinite alternate 0.9s forwards;
+}
+
+@keyframes resize-txt
+{
+	0% {font-size: 48px;}
+	100% {font-size: 60px;}
+}
+
+.modal__btn
+{
+	position: relative;
+	border: none;
+	height: 40px;
+	padding: 0 30px;
+	margin: 40px auto 30px;
+
+	/*border-radius: 9px;*/
+	font: 20px Arial, sans-serif;
+	color: #fff;
+	background: linear-gradient(45deg, #19668D, #22AB93);
+	box-shadow: 1px 1px 1px rgba(0,0,0, 0.5); /* тень кнопки */
+	/*left: 50%;
+	transform: translateX(-50%);*/
+
+	display: none;
+}
+.modal__btn:active
+{
+	box-shadow: inset 2px 1px 8px rgba(0,0,0, 0.5); /* внутренняя тень кнопки */
+}
+.modal__visible
+{
+	display: block;
+}
